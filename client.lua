@@ -318,8 +318,6 @@ function ChangeComponents(shouldChangeModel)
 end
 function RefreshModel()
 	Citizen.CreateThread(function()
-		print(GetEntityModel(PlayerPedId()))
-		print(mdhash)
 		--replaces the player's current model if it wasn't the supposed one already
 		if GetEntityModel(PlayerPedId()) ~= mdhash then
 			while not HasModelLoaded(mdhash) do
@@ -378,7 +376,7 @@ function AddMenuHeritage(menu)
     submenu:AddItem(momitem)
 	
 	local dads = {"00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "42", "43", "44"} -- male heads
-    local daditem = NativeUI.CreateListItem("Dad", mparents, Character["ddad"], "Select your Dad.")
+    local daditem = NativeUI.CreateListItem("Dad", mparents, Character["ddad"] + 1, "Select your Dad.")
     submenu:AddItem(daditem)
     submenu.OnListChange = function(sender, item, index)
         if item == daditem then
@@ -610,7 +608,7 @@ function AddMenuAppearance(menu)
 	local eyebrows = { "Balanced", "Fashion", "Cleopatra", "Quizzical", "Femme", "Seductive", "Pinched", "Chola", "Triomphe", "Carefree", "Curvaceous", "Rodent", 
 	"Double Tram", "Thin", "Penciled", "Mother Plucker", "Straight and Narrow", "Natural", "Fuzzy", "Unkempt", "Caterpillar", "Regular", "Mediterranean", "Groomed", "Bushels", 
 	"Feathered", "Prickly", "Monobrow", "Winged", "Triple Tram", "Arched Tram", "Cutouts", "Fade Away", "Solo Tram" }
-	local eyebrowitem = NativeUI.CreateListItem("Eyebrows", eyebrows, 1, "Select to change your Appearance.")
+	local eyebrowitem = NativeUI.CreateListItem("Eyebrows", eyebrows, Character['eyebrows'] + 1, "Select to change your Appearance.")
 	local browcolor = NativeUI.CreateColourPanel("Color", hairbrowcolors)
 	local browpercentageitem = NativeUI.CreatePercentagePanel("0%", "Opacity", "100%")
 	eyebrowitem:AddPanel(browpercentageitem)
@@ -631,45 +629,43 @@ function AddMenuAppearance(menu)
 	local beard = { "Clean Shaven", "Light Stubble", "Balbo", "Circle Beard", "Goatee", "Chin", "Chin Fuzz", "Pencil Chin Strap", "Scruffy", "Musketeer", "Mustache", 
 	"Trimmed Beard", "Stubble", "Thin Circle Beard", "Horseshoe", "Pencil and Chops", "Chin Strap Beard", "Balbo and Sideburns", "Mutton Chops", "Scruffy Beard", "Curly", 
 	"Curly and Deep Stranger", "Handlebar", "Faustic", "Otto and Patch", "Otto and Full Stranger", "Light Franz", "The Hampstead", "The Ambrose", "Lincoln Curtain" }
-	if Character["gender"] == "Male" then
-		local bearditem = NativeUI.CreateListItem("Facial Hair", beard, Character["beard"], "Make changes to your Appearance.")
-		submenu:AddItem(bearditem)
-		bearditem.OnListChanged = function(ParentMenu, SelectedItem, Index)
-			if Character["gender"] == "Female" then
-				blushitem:Index(Character["beard"] + 1)
-				ShowNotification("Facial Hair unavailable for Female characters.")
+	local bearditem = NativeUI.CreateListItem("Facial Hair", beard, Character["beard"] + 2, "Make changes to your Appearance.")
+	submenu:AddItem(bearditem)
+	bearditem.OnListChanged = function(ParentMenu, SelectedItem, Index)
+		if Character["gender"] == "Female" then
+			bearditem:Index(Character["beard"] + 1)
+			ShowNotification("Facial Hair unavailable for Female characters.")
+		else
+			if Index == 1 then
+				bearditem:RemovePanelAt(1)
+				bearditem:RemovePanelAt(1)
+				SetPedHeadOverlay(GetPlayerPed(-1), 1,0,0.0)
+				SetPedHeadOverlayColor(GetPlayerPed(-1), 1, 1,	0,0)
+				Character['beard'] = 0
+				Character['beard_2'] = 0
+				Character['beard_3'] = 0
 			else
-				if Index == 1 then
-					bearditem:RemovePanelAt(1)
-					bearditem:RemovePanelAt(1)
-					SetPedHeadOverlay(GetPlayerPed(-1), 1,0,0.0)
-					SetPedHeadOverlayColor(GetPlayerPed(-1), 1, 1,	0,0)
-					Character['beard'] = 0
-					Character['beard_2'] = 0
-					Character['beard_3'] = 0
-				else
-					if bearditem.Panels[1] == nil then
-						local beardcolor = NativeUI.CreateColourPanel("Color", hairbrowcolors)
-						local beardper = NativeUI.CreatePercentagePanel("0%", "Opacity", "100%")
-						bearditem:AddPanel(beardper)
-						bearditem:AddPanel(beardcolor)
-					end
-					local ActiveItem = SelectedItem:IndexToItem(Index)
-					local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
-					local color = (ActiveItem.Panels and ActiveItem.Panels[2] or 1)
-					SetPedHeadOverlay(GetPlayerPed(-1), 1,Index - 2,percentage)
-					SetPedHeadOverlayColor(GetPlayerPed(-1), 1, 1,	color-1,0)
-					Character['beard'] = Index - 2
-					Character['beard_2'] = percentage
-					Character['beard_3'] = color-1
+				if bearditem.Panels[1] == nil then
+					local beardcolor = NativeUI.CreateColourPanel("Color", hairbrowcolors)
+					local beardper = NativeUI.CreatePercentagePanel("0%", "Opacity", "100%")
+					bearditem:AddPanel(beardper)
+					bearditem:AddPanel(beardcolor)
 				end
+				local ActiveItem = SelectedItem:IndexToItem(Index)
+				local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
+				local color = (ActiveItem.Panels and ActiveItem.Panels[2] or 1)
+				SetPedHeadOverlay(GetPlayerPed(-1), 1,Index - 2,percentage)
+				SetPedHeadOverlayColor(GetPlayerPed(-1), 1, 1,	color-1,0)
+				Character['beard'] = Index - 2
+				Character['beard_2'] = percentage
+				Character['beard_3'] = color-1
 			end
 		end
 	end
 
 	local blemishes = { "None", "Measles", "Pimples", "Spots", "Break Out", "Blackheads", "Build Up", "Pustules", "Zits", "Full Acne", "Acne", "Cheek Rash", "Face Rash",
 	"Picker", "Puberty", "Eyesore", "Chin Rash", "Two Face", "T Zone", "Greasy", "Marked", "Acne Scarring", "Full Acne Scarring", "Cold Sores", "Impetigo" }
-	local blemishesitem = NativeUI.CreateListItem("Skin Blemishes", blemishes , 1, "Make changes to your Appearance.")
+	local blemishesitem = NativeUI.CreateListItem("Skin Blemishes", blemishes, Character['bodyb_1'] + 1, "Make changes to your Appearance.")
 	submenu:AddItem(blemishesitem)
 	blemishesitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Index == 1 then
@@ -696,7 +692,7 @@ function AddMenuAppearance(menu)
 
 	local aging = { "None", "Crow's Feet", "First Signs", "Middle Aged", "Worry Lines", "Depression", "Distinguished", "Aged", "Weathered", "Wrinkled", "Sagging", "Tough Life", 
 	"Vintage", "Retired", "Junkie", "Geriatric" }
-	local agingitem = NativeUI.CreateListItem("Skin Aging", aging , 1, "Make changes to your Appearance.")
+	local agingitem = NativeUI.CreateListItem("Skin Aging", aging, Character['age_1'] + 1, "Make changes to your Appearance.")
 	submenu:AddItem(agingitem)
 	agingitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Index == 1 then
@@ -719,7 +715,7 @@ function AddMenuAppearance(menu)
 	end
 
 	local complexion = { "None", "Rosy Cheeks", "Stubble Rash", "Hot Flush", "Sunburn", "Bruised", "Alchoholic", "Patchy", "Totem", "Blood Vessels", "Damaged", "Pale", "Ghostly" }
-	local complexitem = NativeUI.CreateListItem("Skin Complexion", complexion , 1, "Make changes to your Appearance.")
+	local complexitem = NativeUI.CreateListItem("Skin Complexion", complexion, Character['complexion_1'] + 1, "Make changes to your Appearance.")
 	submenu:AddItem(complexitem)
 	complexitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Index == 1 then
@@ -743,7 +739,7 @@ function AddMenuAppearance(menu)
 
 	local molefreckle = { "None", "Cherub", "All Over", "Irregular", "Dot Dash", "Over the Bridge", "Baby Doll", "Pixie", "Sun Kissed", "Beauty Marks", "Line Up", "Modelesque",
 	"Occasional", "Speckled", "Rain Drops", "Double Dip", "One Sided", "Pairs", "Growth" }
-	local moleitem = NativeUI.CreateListItem("Moles & Freckles", molefreckle , 1, "Make changes to your Appearance.")
+	local moleitem = NativeUI.CreateListItem("Moles & Freckles", molefreckle, Character['moles_1'] + 1, "Make changes to your Appearance.")
 	local moleopacity = NativeUI.CreatePercentagePanel("0%", "Opacity", "100%")
 	moleitem:AddPanel(moleopacity)
 	submenu:AddItem(moleitem)
@@ -768,7 +764,7 @@ function AddMenuAppearance(menu)
 	end
 
 	local sundamage = { "None", "Uneven", "Sandpaper", "Patchy", "Rough", "Leathery", "Textured", "Coarse", "Rugged", "Creased", "Cracked", "Gritty" }
-	local damageitem = NativeUI.CreateListItem("Skin Damage", sundamage , 1, "Make changes to your Appearance.")
+	local damageitem = NativeUI.CreateListItem("Skin Damage", sundamage, Character['sun_1'] + 1, "Make changes to your Appearance.")
 	submenu:AddItem(damageitem)
 	damageitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Index == 1 then
@@ -796,7 +792,7 @@ function AddMenuAppearance(menu)
 	local eyeColorNames = { "Green", "Emerald", "Light Blue", "Ocean Blue", "Light Brown", "Dark Brown", "Hazel", "Dark Gray", "Light Gray", "Pink", "Yellow", "Purple", "Blackout", 
 	"Shades of Gray", "Tequila Sunrise", "Atomic", "Warp", "ECola", "Space Ranger", "Ying Yang", "Bullseye", "Lizard", "Dragon", "Extra Terrestrial", "Goat", "Smiley", "Possessed", 
 	"Demon", "Infected", "Alien", "Undead", "Zombie"}
-	local eyecoloritem = NativeUI.CreateListItem("Eye Color", eyeColorNames , 1, "Make changes to your Appearance.")
+	local eyecoloritem = NativeUI.CreateListItem("Eye Color", eyeColorNames, Character['eye_color'] + 1, "Make changes to your Appearance.")
 	submenu:AddItem(eyecoloritem)
 	eyecoloritem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		SetPedEyeColor(GetPlayerPed(-1), Index - 1, 0, 1)
@@ -804,7 +800,7 @@ function AddMenuAppearance(menu)
 	end
 
 	local makeup = { "None", "Smoky Black", "Bronze", "Soft Gray", "Retro Glam", "Natural Look", "Cat Eyes", "Chola", "Vamp", "Vinewood Glamour", "Bubblegum", "Aqua Dream", "Pin up", "Purple Passion", "Smoky Cat Eye", "Smoldering Ruby", "Pop Princess"}
-	local makeupitem = NativeUI.CreateListItem("Makeup", makeup , 1, "Make changes to your Appearance.")
+	local makeupitem = NativeUI.CreateListItem("Makeup", makeup, Character['makeup_1'] + 1, "Make changes to your Appearance.")
 	submenu:AddItem(makeupitem)
 	makeupitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Index == 1 then
@@ -834,7 +830,7 @@ function AddMenuAppearance(menu)
 	end
 
 	local blush = { "None", "Full", "Angled", "Round", "Horizontal", "High", "Sweetheart", "Eighties" }
-	local blushitem = NativeUI.CreateListItem("Blusher", blush , 1, "Make changes to your Appearance.")
+	local blushitem = NativeUI.CreateListItem("Blusher", blush, Character['blush_1'] + 1, "Make changes to your Appearance.")
 	submenu:AddItem(blushitem)
 	blushitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Character["gender"] == "Male" then
@@ -869,7 +865,7 @@ function AddMenuAppearance(menu)
 	end
 	
 	local lipstick =  { "None", "Color Matte", "Color Gloss", "Lined Matte", "Lined Gloss", "Heavy Lined Matte", "Heavy Lined Gloss", "Lined Nude Matte", "Liner Nude Gloss", "Smudged", "Geisha" }
-	local lipstickitem = NativeUI.CreateListItem("Lipstick", lipstick , 1, "Make changes to your Appearance.")
+	local lipstickitem = NativeUI.CreateListItem("Lipstick", lipstick, Character['lipstick_1'] + 1, "Make changes to your Appearance.")
 	submenu:AddItem(lipstickitem)
 	lipstickitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Index == 1 then
@@ -943,7 +939,7 @@ function AddMenuApparel(menu)
 	local outfititem = NativeUI.CreateListItem("Outfit", outfits, Character["outfit"], "Make changes to your Apparel.")
 	submenu:AddItem(outfititem)
 
-	local glassesitem = NativeUI.CreateListItem("Aviators", glassus, Character["glasses"], "Make changes to your Apparel.")
+	local glassesitem = NativeUI.CreateListItem("Aviators", glassus, Character["glasses"] + 1, "Make changes to your Apparel.")
 	submenu:AddItem(glassesitem)
 	
 	submenu.OnListChange = function(sender, item, index)
