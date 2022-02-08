@@ -1134,7 +1134,11 @@ Citizen.CreateThread(function()
     end
 end)
 
-RegisterCommand("charedit", function(source --[[ this is the player ID (on the server): a number ]], args --[[ this is a table of the arguments provided ]], rawCommand --[[ this is what the user entered ]])
-    _menuPool:ProcessMenus()
+RegisterNetEvent('lbg-openChar')
+AddEventHandler('lbg-openChar', function()
 	CharCreatorAnimation()
+end)
+
+RegisterCommand("charedit", function(source --[[ this is the player ID (on the server): a number ]], args --[[ this is a table of the arguments provided ]], rawCommand --[[ this is what the user entered ]])
+    TriggerEvent('lbg-openChar')
 end, false)
