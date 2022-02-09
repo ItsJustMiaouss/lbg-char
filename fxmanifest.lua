@@ -1,7 +1,7 @@
 fx_version 'bodacious'
 game 'gta5'
 
-author 'You'
+author 'lambdaguy101'
 version '1.0.0'
 
 client_script '@NativeUI/NativeUI.lua'
