@@ -67,6 +67,10 @@ if GetResourceKvpString('lbg-char-info') ~= nil then
 	Character = json.decode(GetResourceKvpString('lbg-char-info'))
 end
 
+if Character["gender"] == "Female" then
+	mdhash = GetHashKey("mp_f_freemode_01")
+end
+
 local moutfits = {
 	{
 		[3] = {18, 0},
@@ -246,73 +250,73 @@ end
 function ChangeComponents(shouldChangeModel)
 	--the shouldChangeModel parameter is here for legacy purposes, because I am lazy to change up any lines of code
 	--containing it. it is not requires, as it is not used.
-	SetPedDefaultComponentVariation(GetPlayerPed(-1))
-	SetPedHeadBlendData(GetPlayerPed(-1), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
-	SetPedComponentVariation(GetPlayerPed(-1), 2, Character["hair"], 0, 2)
-	SetPedHairColor(GetPlayerPed(-1),Character['hair_color_1'], 0)
+	SetPedDefaultComponentVariation(PlayerPedId())
+	SetPedHeadBlendData(PlayerPedId(), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
+	SetPedComponentVariation(PlayerPedId(), 2, Character["hair"], 0, 2)
+	SetPedHairColor(PlayerPedId(),Character['hair_color_1'], 0)
 
-	ClearPedDecorations(GetPlayerPed(-1))
+	ClearPedDecorations(PlayerPedId())
 	if hairDecor[Character["ogd"]][Character["hair"]] ~= nil then
-		AddPedDecorationFromHashes(GetPlayerPed(-1), hairDecor[Character["ogd"]][GetPedDrawableVariation(PlayerPedId(), 2)][1], hairDecor[Character["ogd"]][GetPedDrawableVariation(PlayerPedId(), 2)][2])
+		AddPedDecorationFromHashes(PlayerPedId(), hairDecor[Character["ogd"]][GetPedDrawableVariation(PlayerPedId(), 2)][1], hairDecor[Character["ogd"]][GetPedDrawableVariation(PlayerPedId(), 2)][2])
 	else
-		AddPedDecorationFromHashes(GetPlayerPed(-1), hairDecorDefault[1], hairDecorDefault[2])
+		AddPedDecorationFromHashes(PlayerPedId(), hairDecorDefault[1], hairDecorDefault[2])
 	end
-	SetPedHeadOverlay(GetPlayerPed(-1), 8,Character['lipstick_1'],Character['lipstick_2'])
-	SetPedHeadOverlayColor(GetPlayerPed(-1), 8, 1,Character['lipstick_3'],0)
-	SetPedHeadOverlay(GetPlayerPed(-1), 2,Character['eyebrows'],Character['eyebrows_2'])
-	SetPedHeadOverlayColor(GetPlayerPed(-1), 2, 1,Character['eyebrows_3'],0)
-	SetPedHeadOverlay(GetPlayerPed(-1), 3,Character['age_1'],Character['age_2'])
-	SetPedHeadOverlay(GetPlayerPed(-1), 7,Character['sun_1'],Character['sun_2'])
-	SetPedHeadOverlay(GetPlayerPed(-1), 6,Character['complexion_1'],Character['complexion_2'])
-	SetPedHeadOverlay(GetPlayerPed(-1), 9,Character['moles_1'],Character['moles_2'])
-	SetPedEyeColor(GetPlayerPed(-1), Character['eye_color'], 0, 1)
-	SetPedHeadOverlay(GetPlayerPed(-1), 4,Character['makeup_1'],Character['makeup_2'])
-	SetPedHeadOverlayColor(GetPlayerPed(-1), 4, 1,Character['makeup_3'],0)
-	SetPedFaceFeature(GetPlayerPed(-1), 19, Character['neck_thick'])
-	SetPedFaceFeature(GetPlayerPed(-1), 18, Character['chin_hole'])
-	SetPedFaceFeature(GetPlayerPed(-1), 17, Character['chin_width'])
-	SetPedFaceFeature(GetPlayerPed(-1), 16, Character['chin_length'])
-	SetPedFaceFeature(GetPlayerPed(-1), 15, Character['chin_height'])
-	SetPedFaceFeature(GetPlayerPed(-1), 14, Character['jaw_2'])
-	SetPedFaceFeature(GetPlayerPed(-1), 13, Character['jaw_1'])
-	SetPedFaceFeature(GetPlayerPed(-1), 12, Character['lips_thick'])
-	SetPedFaceFeature(GetPlayerPed(-1), 11, Character['eye_open'])
-	SetPedFaceFeature(GetPlayerPed(-1), 10, Character['cheeks_3'])
-	SetPedFaceFeature(GetPlayerPed(-1), 9, Character['cheeks_2'])
-	SetPedFaceFeature(GetPlayerPed(-1), 8, Character['cheeks_1'])
-	SetPedFaceFeature(GetPlayerPed(-1), 6, Character['eyebrows_6'])
-	SetPedFaceFeature(GetPlayerPed(-1), 7, Character['eyebrows_5'])
-	SetPedFaceFeature(GetPlayerPed(-1), 5, Character['nose_6'])
-	SetPedFaceFeature(GetPlayerPed(-1), 4, Character['nose_5'])
-	SetPedFaceFeature(GetPlayerPed(-1), 3, Character['nose_4'])
-	SetPedFaceFeature(GetPlayerPed(-1), 2, Character['nose_3'])
-	SetPedFaceFeature(GetPlayerPed(-1), 1, Character['nose_2'])
-	SetPedFaceFeature(GetPlayerPed(-1), 0, Character['nose_1'])
+	SetPedHeadOverlay(PlayerPedId(), 8,Character['lipstick_1'],Character['lipstick_2'])
+	SetPedHeadOverlayColor(PlayerPedId(), 8, 1,Character['lipstick_3'],0)
+	SetPedHeadOverlay(PlayerPedId(), 2,Character['eyebrows'],Character['eyebrows_2'])
+	SetPedHeadOverlayColor(PlayerPedId(), 2, 1,Character['eyebrows_3'],0)
+	SetPedHeadOverlay(PlayerPedId(), 3,Character['age_1'],Character['age_2'])
+	SetPedHeadOverlay(PlayerPedId(), 7,Character['sun_1'],Character['sun_2'])
+	SetPedHeadOverlay(PlayerPedId(), 6,Character['complexion_1'],Character['complexion_2'])
+	SetPedHeadOverlay(PlayerPedId(), 9,Character['moles_1'],Character['moles_2'])
+	SetPedEyeColor(PlayerPedId(), Character['eye_color'], 0, 1)
+	SetPedHeadOverlay(PlayerPedId(), 4,Character['makeup_1'],Character['makeup_2'])
+	SetPedHeadOverlayColor(PlayerPedId(), 4, 1,Character['makeup_3'],0)
+	SetPedFaceFeature(PlayerPedId(), 19, Character['neck_thick'])
+	SetPedFaceFeature(PlayerPedId(), 18, Character['chin_hole'])
+	SetPedFaceFeature(PlayerPedId(), 17, Character['chin_width'])
+	SetPedFaceFeature(PlayerPedId(), 16, Character['chin_length'])
+	SetPedFaceFeature(PlayerPedId(), 15, Character['chin_height'])
+	SetPedFaceFeature(PlayerPedId(), 14, Character['jaw_2'])
+	SetPedFaceFeature(PlayerPedId(), 13, Character['jaw_1'])
+	SetPedFaceFeature(PlayerPedId(), 12, Character['lips_thick'])
+	SetPedFaceFeature(PlayerPedId(), 11, Character['eye_open'])
+	SetPedFaceFeature(PlayerPedId(), 10, Character['cheeks_3'])
+	SetPedFaceFeature(PlayerPedId(), 9, Character['cheeks_2'])
+	SetPedFaceFeature(PlayerPedId(), 8, Character['cheeks_1'])
+	SetPedFaceFeature(PlayerPedId(), 6, Character['eyebrows_6'])
+	SetPedFaceFeature(PlayerPedId(), 7, Character['eyebrows_5'])
+	SetPedFaceFeature(PlayerPedId(), 5, Character['nose_6'])
+	SetPedFaceFeature(PlayerPedId(), 4, Character['nose_5'])
+	SetPedFaceFeature(PlayerPedId(), 3, Character['nose_4'])
+	SetPedFaceFeature(PlayerPedId(), 2, Character['nose_3'])
+	SetPedFaceFeature(PlayerPedId(), 1, Character['nose_2'])
+	SetPedFaceFeature(PlayerPedId(), 0, Character['nose_1'])
 	if Character["gender"] == "Male" then
 		for k, v in pairs(moutfits[Character["outfit"]]) do
-			SetPedComponentVariation(GetPlayerPed(-1), k, v[1], v[2], 2)
+			SetPedComponentVariation(PlayerPedId(), k, v[1], v[2], 2)
 		end
-		SetPedHeadOverlay(GetPlayerPed(-1), 1,Character['beard'],Character['beard_2'])
-		SetPedHeadOverlayColor(GetPlayerPed(-1), 1, 1,	Character['beard_3'],0)
+		SetPedHeadOverlay(PlayerPedId(), 1,Character['beard'],Character['beard_2'])
+		SetPedHeadOverlayColor(PlayerPedId(), 1, 1,	Character['beard_3'],0)
 	elseif Character["gender"] == "Female" then
 		for k, v in pairs(foutfits[Character["outfit"]]) do
-			SetPedComponentVariation(GetPlayerPed(-1), k, v[1], v[2], 2)
+			SetPedComponentVariation(PlayerPedId(), k, v[1], v[2], 2)
 		end
-		SetPedHeadOverlay(GetPlayerPed(-1), 5,Character['blush_1'],Character['blush_2'])
-		SetPedHeadOverlayColor(GetPlayerPed(-1), 5, 2,	Character['blush_3'],0)
+		SetPedHeadOverlay(PlayerPedId(), 5,Character['blush_1'],Character['blush_2'])
+		SetPedHeadOverlayColor(PlayerPedId(), 5, 2,	Character['blush_3'],0)
 	end
 	local glassDR
 	if Character["glasses"] == 0 then
 		if Character["gender"] == "Male" then
-			SetPedPropIndex(GetPlayerPed(-1), 1, 11, 0, false)
+			SetPedPropIndex(PlayerPedId(), 1, 11, 0, false)
 		else
-			SetPedPropIndex(GetPlayerPed(-1), 1, 5, 0, false)
+			SetPedPropIndex(PlayerPedId(), 1, 5, 0, false)
 		end
 	else
 		if Character["gender"] == "Male" then
-			SetPedPropIndex(GetPlayerPed(-1), 1, 5, 0, false)
+			SetPedPropIndex(PlayerPedId(), 1, 5, 0, false)
 		else
-			SetPedPropIndex(GetPlayerPed(-1), 1, 11, 0, false)
+			SetPedPropIndex(PlayerPedId(), 1, 11, 0, false)
 		end
 	end
 end
@@ -325,7 +329,7 @@ function RefreshModel()
 				Wait(0)
 			end
 			SetPlayerModel(PlayerId(), mdhash)
-			SetPedHeadBlendData(GetPlayerPed(-1), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
+			SetPedHeadBlendData(PlayerPedId(), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
 			ChangeComponents()
 		end
 	end)
@@ -388,7 +392,7 @@ function AddMenuHeritage(menu)
 			Character["mom"] = tonumber(moms[index])
         end
 		heritage:Index(Character["dmom"], Character["ddad"])
-		SetPedHeadBlendData(GetPlayerPed(-1), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
+		SetPedHeadBlendData(PlayerPedId(), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
     end
 	
 	local ZtO = {} -- array  that counts from 0 to 1 with decimals
@@ -403,12 +407,12 @@ function AddMenuHeritage(menu)
     submenu.OnSliderChange = function(sender, item, index)
         if item == resemblanceitem then
 			Character["resemblance"] = ZtO[index]
-			SetPedHeadBlendData(GetPlayerPed(-1), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
+			SetPedHeadBlendData(PlayerPedId(), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
 		end
 		
 		if item == skintoneitem then
 			Character["skintone"] = ZtO[index]
-			SetPedHeadBlendData(GetPlayerPed(-1), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
+			SetPedHeadBlendData(PlayerPedId(), Character["mom"], Character["dad"], nil, Character["mom"], Character["dad"], nil, Character["resemblance"], Character["skintone"], nil, true)
 		end
     end
 	
@@ -431,37 +435,37 @@ function AddMenuFaceShape(menu)
 		local NoseWidth =  NativeUI.CreateSliderItem("Nose Width", ListItem, 1 + Character['nose_1'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(NoseWidth)
 		NoseWidth.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 0, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 0, tonumber(ListItem[index]))
 			Character['nose_1'] = tonumber(ListItem[index])
 		end
 		local NosePeakHeight =  NativeUI.CreateSliderItem("Nose Peak Height", ListItem, 1 + Character['nose_2'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(NosePeakHeight)
 		NosePeakHeight.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 1, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 1, tonumber(ListItem[index]))
 			Character['nose_2'] = tonumber(ListItem[index])
 		end
 		local NosePeakLength =  NativeUI.CreateSliderItem("Nose Peak Length", ListItem, 1 + Character['nose_3'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(NosePeakLength)
 		NosePeakLength.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 2, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 2, tonumber(ListItem[index]))
 			Character['nose_3'] = tonumber(ListItem[index])
 		end
 		local NoseBoneHeight =  NativeUI.CreateSliderItem("Nose Bone Height", ListItem, 1 + Character['nose_4'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(NoseBoneHeight)
 		NoseBoneHeight.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 3, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 3, tonumber(ListItem[index]))
 			Character['nose_4'] = tonumber(ListItem[index])
 		end
 		local NosePeakLowering =  NativeUI.CreateSliderItem("Nose Peak Lowering", ListItem, 1 + Character['nose_5'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(NosePeakLowering)
 		NosePeakLowering.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 4, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 4, tonumber(ListItem[index]))
 			Character['nose_5'] = tonumber(ListItem[index])
 		end
 		local NoseBoneTwist =  NativeUI.CreateSliderItem("Nose Bone Twist", ListItem, 1 + Character['nose_6'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(NoseBoneTwist)
 		NoseBoneTwist.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 5, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 5, tonumber(ListItem[index]))
 			Character['nose_6'] = tonumber(ListItem[index])
 		end
 
@@ -469,13 +473,13 @@ function AddMenuFaceShape(menu)
 		local EyebrowDepth =  NativeUI.CreateSliderItem("Eyebrow Depth", ListItem, 1 + Character['eyebrows_5'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(EyebrowDepth)
 		EyebrowDepth.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 7, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 7, tonumber(ListItem[index]))
 			Character['eyebrows_5'] = tonumber(ListItem[index])
 		end
 		local EyebrowHeight =  NativeUI.CreateSliderItem("Eyebrow Height", ListItem, 1 + Character['eyebrows_6'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(EyebrowHeight)
 		EyebrowHeight.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 6, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 6, tonumber(ListItem[index]))
 			Character['eyebrows_6'] = tonumber(ListItem[index])
 		end
 		
@@ -483,13 +487,13 @@ function AddMenuFaceShape(menu)
 		local CheekbonesHeight =  NativeUI.CreateSliderItem("Cheekbones Height", ListItem, 1 + Character['cheeks_1'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(CheekbonesHeight)
 		CheekbonesHeight.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 8, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 8, tonumber(ListItem[index]))
 			Character['cheeks_1'] = tonumber(ListItem[index])
 		end
 		local CheekbonesWidth =  NativeUI.CreateSliderItem("Cheekbones Width", ListItem, 1 + Character['cheeks_2'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(CheekbonesWidth)
 		CheekbonesWidth.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 9, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 9, tonumber(ListItem[index]))
 			Character['cheeks_2'] = tonumber(ListItem[index])
 		end
 		
@@ -497,7 +501,7 @@ function AddMenuFaceShape(menu)
 		local CheeksWidth =  NativeUI.CreateSliderItem("Cheeks Width", ListItem, 1 + Character['cheeks_3'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(CheeksWidth)
 		CheeksWidth.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 10, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 10, tonumber(ListItem[index]))
 			Character['cheeks_3'] = tonumber(ListItem[index])
 		end
 		
@@ -505,7 +509,7 @@ function AddMenuFaceShape(menu)
 		local EyeOpening =  NativeUI.CreateSliderItem("Eye Opening", ListItem, 1 + Character['eye_open'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(EyeOpening)
 		EyeOpening.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 11, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 11, tonumber(ListItem[index]))
 			Character['eye_open'] = tonumber(ListItem[index])
 		end
 
@@ -513,7 +517,7 @@ function AddMenuFaceShape(menu)
 		local LipsThickness =  NativeUI.CreateSliderItem("Lips Thickness", ListItem, 1 + Character['lips_thick'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(LipsThickness)
 		LipsThickness.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 12, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 12, tonumber(ListItem[index]))
 			Character['lips_thick'] = tonumber(ListItem[index])
 		end
 
@@ -521,13 +525,13 @@ function AddMenuFaceShape(menu)
 		local JawBoneWidth =  NativeUI.CreateSliderItem("Jaw Bone Width", ListItem, 1 + Character['jaw_1'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(JawBoneWidth)
 		JawBoneWidth.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 13, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 13, tonumber(ListItem[index]))
 			Character['jaw_1'] = tonumber(ListItem[index])
 		end
 		local JawBoneDepth =  NativeUI.CreateSliderItem("Jaw Bone Depth", ListItem, 1 + Character['jaw_2'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(JawBoneDepth)
 		JawBoneDepth.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 14, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 14, tonumber(ListItem[index]))
 			Character['jaw_2'] = tonumber(ListItem[index])
 		end
 
@@ -535,25 +539,25 @@ function AddMenuFaceShape(menu)
 		local ChinHeight =  NativeUI.CreateSliderItem("Chin Height", ListItem, 1 + Character['chin_height'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(ChinHeight)
 		ChinHeight.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 15, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 15, tonumber(ListItem[index]))
 			Character['chin_height'] = tonumber(ListItem[index])
 		end
 		local ChinDepth =  NativeUI.CreateSliderItem("Chin Depth", ListItem, 1 + Character['chin_length'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(ChinDepth)
 		ChinDepth.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 16, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 16, tonumber(ListItem[index]))
 			Character['chin_length'] = tonumber(ListItem[index])
 		end
 		local ChinWidth =  NativeUI.CreateSliderItem("Chin Width", ListItem, 1 + Character['chin_width'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(ChinWidth)
 		ChinWidth.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 17, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 17, tonumber(ListItem[index]))
 			Character['chin_width'] = tonumber(ListItem[index])
 		end
 		local ChinHoleSize =  NativeUI.CreateSliderItem("Chin Hole Size", ListItem, 1 + Character['chin_hole'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(ChinHoleSize)
 		ChinHoleSize.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 18, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 18, tonumber(ListItem[index]))
 			Character['chin_hole'] = tonumber(ListItem[index])
 		end
 
@@ -561,7 +565,7 @@ function AddMenuFaceShape(menu)
 		local NeckThickness =  NativeUI.CreateSliderItem("Neck Thickness", ListItem, 1 + Character['neck_thick'] * 10 + 1, "Make changes to your physical Features.", true)
 		submenu:AddItem(NeckThickness)
 		NeckThickness.OnSliderChanged = function(sender, item, index)
-			SetPedFaceFeature(GetPlayerPed(-1), 19, tonumber(ListItem[index]))
+			SetPedFaceFeature(PlayerPedId(), 19, tonumber(ListItem[index]))
 			Character['neck_thick'] = tonumber(ListItem[index])
 		end
 
@@ -590,18 +594,18 @@ function AddMenuAppearance(menu)
 		local color = (ActiveItem.Panels and ActiveItem.Panels[1] or 1)
 		Character['hair_color_1'] = color-1
 		Character["hair"] = Index - 1
-		SetPedComponentVariation(GetPlayerPed(-1), 2, Index - 1, 0, 2)
-		SetPedHairColor(GetPlayerPed(-1),color-1,0)
-		ClearPedDecorations(GetPlayerPed(-1))
+		SetPedComponentVariation(PlayerPedId(), 2, Index - 1, 0, 2)
+		SetPedHairColor(PlayerPedId(),color-1,0)
+		ClearPedDecorations(PlayerPedId())
 		if hairDecor[Character["ogd"]][hairitem:Index()] ~= nil then
 			local hairDecoraciones = hairDecor[Character["ogd"]]
 			if hairDecoraciones[Character["hair"]] ~= nil then
-				AddPedDecorationFromHashes(GetPlayerPed(-1), hairDecoraciones[Character["hair"]][1], hairDecoraciones[Character["hair"]][2])
+				AddPedDecorationFromHashes(PlayerPedId(), hairDecoraciones[Character["hair"]][1], hairDecoraciones[Character["hair"]][2])
 			else
-				AddPedDecorationFromHashes(GetPlayerPed(-1), hairDecorDefault[1], hairDecorDefault[2])
+				AddPedDecorationFromHashes(PlayerPedId(), hairDecorDefault[1], hairDecorDefault[2])
 			end
 		else
-			AddPedDecorationFromHashes(GetPlayerPed(-1), hairDecorDefault[1], hairDecorDefault[2])
+			AddPedDecorationFromHashes(PlayerPedId(), hairDecorDefault[1], hairDecorDefault[2])
 		end
 	end
 	
@@ -619,8 +623,8 @@ function AddMenuAppearance(menu)
 		local ActiveItem = SelectedItem:IndexToItem(Index)
         local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
 		local color = (ActiveItem.Panels and ActiveItem.Panels[2] or 1)
-		SetPedHeadOverlay(GetPlayerPed(-1), 2,Index-1,percentage)
-		SetPedHeadOverlayColor(GetPlayerPed(-1), 2, 1,	color-1,0)
+		SetPedHeadOverlay(PlayerPedId(), 2,Index-1,percentage)
+		SetPedHeadOverlayColor(PlayerPedId(), 2, 1,	color-1,0)
 		Character['eyebrows'] = Index-1
 		Character['eyebrows_2'] = percentage
 		Character['eyebrows_3'] = color-1
@@ -639,8 +643,8 @@ function AddMenuAppearance(menu)
 			if Index == 1 then
 				bearditem:RemovePanelAt(1)
 				bearditem:RemovePanelAt(1)
-				SetPedHeadOverlay(GetPlayerPed(-1), 1,0,0.0)
-				SetPedHeadOverlayColor(GetPlayerPed(-1), 1, 1,	0,0)
+				SetPedHeadOverlay(PlayerPedId(), 1,0,0.0)
+				SetPedHeadOverlayColor(PlayerPedId(), 1, 1,	0,0)
 				Character['beard'] = 0
 				Character['beard_2'] = 0
 				Character['beard_3'] = 0
@@ -654,8 +658,8 @@ function AddMenuAppearance(menu)
 				local ActiveItem = SelectedItem:IndexToItem(Index)
 				local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
 				local color = (ActiveItem.Panels and ActiveItem.Panels[2] or 1)
-				SetPedHeadOverlay(GetPlayerPed(-1), 1,Index - 2,percentage)
-				SetPedHeadOverlayColor(GetPlayerPed(-1), 1, 1,	color-1,0)
+				SetPedHeadOverlay(PlayerPedId(), 1,Index - 2,percentage)
+				SetPedHeadOverlayColor(PlayerPedId(), 1, 1,	color-1,0)
 				Character['beard'] = Index - 2
 				Character['beard_2'] = percentage
 				Character['beard_3'] = color-1
@@ -671,8 +675,8 @@ function AddMenuAppearance(menu)
 		if Index == 1 then
 			blemishesitem:RemovePanelAt(1)
 			blemishesitem:RemovePanelAt(1)
-			SetPedHeadOverlay(GetPlayerPed(-1), 11,0,0.0)
-			SetPedHeadOverlayColor(GetPlayerPed(-1), 11, 1,	0,0)
+			SetPedHeadOverlay(PlayerPedId(), 11,0,0.0)
+			SetPedHeadOverlayColor(PlayerPedId(), 11, 1,	0,0)
 			Character['bodyb_1'] = 0
 			Character['bodyb_2'] = 0
 		else
@@ -684,7 +688,7 @@ function AddMenuAppearance(menu)
 			end
 			local ActiveItem = SelectedItem:IndexToItem(Index)
 			local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
-			SetPedHeadOverlay(GetPlayerPed(-1), 11,Index-1,percentage)
+			SetPedHeadOverlay(PlayerPedId(), 11,Index-1,percentage)
 			Character['bodyb_1'] = Index-1
 			Character['bodyb_2'] = percentage
 		end
@@ -697,8 +701,8 @@ function AddMenuAppearance(menu)
 	agingitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Index == 1 then
 			agingitem:RemovePanelAt(1)
-			SetPedHeadOverlay(GetPlayerPed(-1), 3,0,0.0)
-			SetPedHeadOverlayColor(GetPlayerPed(-1), 3, 1,	0,0)
+			SetPedHeadOverlay(PlayerPedId(), 3,0,0.0)
+			SetPedHeadOverlayColor(PlayerPedId(), 3, 1,	0,0)
 			Character['age_1'] = 0
 			Character['age_2'] = 0
 		else
@@ -708,7 +712,7 @@ function AddMenuAppearance(menu)
 			end
 			local ActiveItem = SelectedItem:IndexToItem(Index)
 			local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
-			SetPedHeadOverlay(GetPlayerPed(-1), 3,Index-2,percentage)
+			SetPedHeadOverlay(PlayerPedId(), 3,Index-2,percentage)
 			Character['age_1'] = Index-2
 			Character['age_2'] = percentage
 		end
@@ -720,8 +724,8 @@ function AddMenuAppearance(menu)
 	complexitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Index == 1 then
 			complexitem:RemovePanelAt(1)
-			SetPedHeadOverlay(GetPlayerPed(-1), 9,0,0.0)
-			SetPedHeadOverlayColor(GetPlayerPed(-1), 9, 1,	0,0)
+			SetPedHeadOverlay(PlayerPedId(), 9,0,0.0)
+			SetPedHeadOverlayColor(PlayerPedId(), 9, 1,	0,0)
 			Character['complexion_1'] = 0
 			Character['complexion_2'] = 0
 		else
@@ -731,7 +735,7 @@ function AddMenuAppearance(menu)
 			end
 			local ActiveItem = SelectedItem:IndexToItem(Index)
 			local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
-			SetPedHeadOverlay(GetPlayerPed(-1), 6,Index-2,percentage)
+			SetPedHeadOverlay(PlayerPedId(), 6,Index-2,percentage)
 			Character['complexion_1'] = Index-2
 			Character['complexion_2'] = percentage
 		end
@@ -746,8 +750,8 @@ function AddMenuAppearance(menu)
 	moleitem.OnListChanged = function(ParentMenu, SelectedItem, Index)
 		if Index == 1 then
 			moleitem:RemovePanelAt(1)
-			SetPedHeadOverlay(GetPlayerPed(-1), 9,0,0.0)
-			SetPedHeadOverlayColor(GetPlayerPed(-1), 9, 1,	0,0)
+			SetPedHeadOverlay(PlayerPedId(), 9,0,0.0)
+			SetPedHeadOverlayColor(PlayerPedId(), 9, 1,	0,0)
 			Character['moles_1'] = 0
 			Character['moles_2'] = 0
 		else
@@ -757,7 +761,7 @@ function AddMenuAppearance(menu)
 			end
 			local ActiveItem = SelectedItem:IndexToItem(Index)
 			local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
-			SetPedHeadOverlay(GetPlayerPed(-1), 9,Index-1,percentage)
+			SetPedHeadOverlay(PlayerPedId(), 9,Index-1,percentage)
 			Character['moles_1'] = Index-1
 			Character['moles_2'] = percentage
 		end
@@ -770,8 +774,8 @@ function AddMenuAppearance(menu)
 		if Index == 1 then
 			damageitem:RemovePanelAt(1)
 			damageitem:RemovePanelAt(1)
-			SetPedHeadOverlay(GetPlayerPed(-1), 7,0,0.0)
-			SetPedHeadOverlayColor(GetPlayerPed(-1), 7, 1,	0,0)
+			SetPedHeadOverlay(PlayerPedId(), 7,0,0.0)
+			SetPedHeadOverlayColor(PlayerPedId(), 7, 1,	0,0)
 			Character['sun_1'] = 0
 			Character['sun_2'] = 0
 		else
@@ -783,7 +787,7 @@ function AddMenuAppearance(menu)
 			end
 			local ActiveItem = SelectedItem:IndexToItem(Index)
 			local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
-			SetPedHeadOverlay(GetPlayerPed(-1), 7,Index-2,percentage)
+			SetPedHeadOverlay(PlayerPedId(), 7,Index-2,percentage)
 			Character['sun_1'] = Index-2
 			Character['sun_2'] = percentage
 		end
@@ -795,7 +799,7 @@ function AddMenuAppearance(menu)
 	local eyecoloritem = NativeUI.CreateListItem("Eye Color", eyeColorNames, Character['eye_color'] + 1, "Make changes to your Appearance.")
 	submenu:AddItem(eyecoloritem)
 	eyecoloritem.OnListChanged = function(ParentMenu, SelectedItem, Index)
-		SetPedEyeColor(GetPlayerPed(-1), Index - 1, 0, 1)
+		SetPedEyeColor(PlayerPedId(), Index - 1, 0, 1)
 		Character['eye_color'] = Index-1
 	end
 
@@ -806,8 +810,8 @@ function AddMenuAppearance(menu)
 		if Index == 1 then
 			makeupitem:RemovePanelAt(1)
 			makeupitem:RemovePanelAt(1)
-			SetPedHeadOverlay(GetPlayerPed(-1), 4,0,0.0)
-			SetPedHeadOverlayColor(GetPlayerPed(-1), 4, 1,	0,0)
+			SetPedHeadOverlay(PlayerPedId(), 4,0,0.0)
+			SetPedHeadOverlayColor(PlayerPedId(), 4, 1,	0,0)
 			Character['makeup_1'] = 0
 			Character['makeup_2'] = 0
 			Character['makeup_3'] = 0
@@ -821,8 +825,8 @@ function AddMenuAppearance(menu)
 			local ActiveItem = SelectedItem:IndexToItem(Index)
 			local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
 			local color = (ActiveItem.Panels and ActiveItem.Panels[2] or 1)
-			SetPedHeadOverlay(GetPlayerPed(-1), 4,Index-2,percentage)
-			SetPedHeadOverlayColor(GetPlayerPed(-1), 4, 1,	color-1,0)
+			SetPedHeadOverlay(PlayerPedId(), 4,Index-2,percentage)
+			SetPedHeadOverlayColor(PlayerPedId(), 4, 1,	color-1,0)
 			Character['makeup_1'] = Index-2
 			Character['makeup_2'] = percentage
 			Character['makeup_3'] = color-1
@@ -840,8 +844,8 @@ function AddMenuAppearance(menu)
 			if Index == 1 then
 				blushitem:RemovePanelAt(1)
 				blushitem:RemovePanelAt(1)
-				SetPedHeadOverlay(GetPlayerPed(-1), 5,0,0.0)
-				SetPedHeadOverlayColor(GetPlayerPed(-1), 5, 1,	0,0)
+				SetPedHeadOverlay(PlayerPedId(), 5,0,0.0)
+				SetPedHeadOverlayColor(PlayerPedId(), 5, 1,	0,0)
 				Character['blush_1'] = 0
 				Character['blush_2'] = 0
 				Character['blush_3'] = 0
@@ -855,8 +859,8 @@ function AddMenuAppearance(menu)
 				local ActiveItem = SelectedItem:IndexToItem(Index)
 				local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
 				local color = (ActiveItem.Panels and ActiveItem.Panels[2] or 1)
-				SetPedHeadOverlay(GetPlayerPed(-1), 5,Index-2,percentage)
-				SetPedHeadOverlayColor(GetPlayerPed(-1), 5, 2,	color-1,0)
+				SetPedHeadOverlay(PlayerPedId(), 5,Index-2,percentage)
+				SetPedHeadOverlayColor(PlayerPedId(), 5, 2,	color-1,0)
 				Character['blush_1'] = Index-2
 				Character['blush_2'] = percentage
 				Character['blush_3'] = color-1
@@ -871,8 +875,8 @@ function AddMenuAppearance(menu)
 		if Index == 1 then
 			lipstickitem:RemovePanelAt(1)
 			lipstickitem:RemovePanelAt(1)
-			SetPedHeadOverlay(GetPlayerPed(-1), 8,0,0.0)
-			SetPedHeadOverlayColor(GetPlayerPed(-1), 8, 1,	0,0)
+			SetPedHeadOverlay(PlayerPedId(), 8,0,0.0)
+			SetPedHeadOverlayColor(PlayerPedId(), 8, 1,	0,0)
 			Character['lipstick_1'] = 0
 			Character['lipstick_2'] = 0
 			Character['lipstick_3'] = 0
@@ -886,8 +890,8 @@ function AddMenuAppearance(menu)
 			local ActiveItem = SelectedItem:IndexToItem(Index)
 			local percentage = (ActiveItem.Panels and ActiveItem.Panels[1] or 1.0)
 			local color = (ActiveItem.Panels and ActiveItem.Panels[2] or 1)
-			SetPedHeadOverlay(GetPlayerPed(-1), 8,Index-2,percentage)
-			SetPedHeadOverlayColor(GetPlayerPed(-1), 8, 1,	color-1,0)
+			SetPedHeadOverlay(PlayerPedId(), 8,Index-2,percentage)
+			SetPedHeadOverlayColor(PlayerPedId(), 8, 1,	color-1,0)
 			Character['lipstick_1'] = Index-2
 			Character['lipstick_2'] = percentage
 			Character['lipstick_3'] = color-1
@@ -950,9 +954,9 @@ function AddMenuApparel(menu)
 		if item == glassesitem then
 			Character["glasses"] = index - 1
 			if Character["gender"] == "Male" then
-				SetPedPropIndex(GetPlayerPed(-1), 1, tonumber(glassMDRs[index]), 0, true)
+				SetPedPropIndex(PlayerPedId(), 1, tonumber(glassMDRs[index]), 0, true)
 			else
-				SetPedPropIndex(GetPlayerPed(-1), 1, tonumber(glassFDRs[index]), 0, true)
+				SetPedPropIndex(PlayerPedId(), 1, tonumber(glassFDRs[index]), 0, true)
 			end
 		end
 	end
@@ -996,7 +1000,7 @@ function Collision()
         if NetworkIsPlayerActive(i) then
             SetEntityVisible(GetPlayerPed(i), false, false)
             SetEntityVisible(PlayerPedId(), true, true)
-            SetEntityNoCollisionEntity(GetPlayerPed(i), GetPlayerPed(-1), false)
+            SetEntityNoCollisionEntity(GetPlayerPed(i), PlayerPedId(), false)
         end
     end
 end
@@ -1038,7 +1042,7 @@ function AnimCam()
     DoScreenFadeOut(1000)
     Citizen.Wait(4000)
     DestroyAllCams(true)
-	initpos = GetEntityCoords(GetPlayerPed(-1))
+	initpos = GetEntityCoords(PlayerPedId())
 	RefreshModel()
     ChangeComponents(true)
 	cam2 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", Camera['body'].x, Camera['body'].y, Camera['body'].z, 0.00, 0.00, 0.00, Camera['body'].fov, false, 0)
@@ -1046,40 +1050,40 @@ function AnimCam()
     RenderScriptCams(true, false, 2000, true, true) 
     Citizen.Wait(500)
     DoScreenFadeIn(2000)
-    SetEntityCoords(GetPlayerPed(-1), 405.59, -997.18, -99.00, 0.0, 0.0, 0.0, true)
-    SetEntityHeading(GetPlayerPed(-1), 90.00)
+    SetEntityCoords(PlayerPedId(), 405.59, -997.18, -99.00, 0.0, 0.0, 0.0, true)
+    SetEntityHeading(PlayerPedId(), 90.00)
     -- TriggerEvent('skinchanger:loadSkin', {sex = 0})
     Citizen.Wait(500)
     cam3 = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 402.99, -998.02, -99.00, 0.00, 0.00, 0.00, 50.00, false, 0)
     PointCamAtCoord(cam3, 402.99, -998.02, -99.00)
     SetCamActiveWithInterp(cam2, cam3, 5000, true, true)
     LoadAnim("mp_character_creation@customise@male_a")
-    TaskPlayAnim(GetPlayerPed(-1), "mp_character_creation@customise@male_a", "intro", 1.0, 1.0, 4050, 0, 1, 0, 0, 0)
+    TaskPlayAnim(PlayerPedId(), "mp_character_creation@customise@male_a", "intro", 1.0, 1.0, 4050, 0, 1, 0, 0, 0)
 	Citizen.Wait(5500)
 	loopanim = true
-    local coords = GetEntityCoords(GetPlayerPed(-1))
+    local coords = GetEntityCoords(PlayerPedId())
     if GetDistanceBetweenCoords(coords, 402.89, -996.87, -99.0, true) > 0.5 then
-    	SetEntityCoords(GetPlayerPed(-1), 402.89, -996.87, -99.0, 0.0, 0.0, 0.0, true)
-    	SetEntityHeading(GetPlayerPed(-1), 173.97)
+    	SetEntityCoords(PlayerPedId(), 402.89, -996.87, -99.0, 0.0, 0.0, 0.0, true)
+    	SetEntityHeading(PlayerPedId(), 173.97)
     end
     Citizen.Wait(100)
 	mainMenu:Visible(true)
     Citizen.Wait(1000)
-    FreezeEntityPosition(GetPlayerPed(-1), true)
+    FreezeEntityPosition(PlayerPedId(), true)
 end
 
 function EndCharCreator()
 	mainMenu:Visible(false)
-	FreezeEntityPosition(GetPlayerPed(-1), false)
+	FreezeEntityPosition(PlayerPedId(), false)
 	if Character["gender"] == "Male" then
 		LoadAnim("mp_character_creation@lineup@male_b")
-		TaskPlayAnim(GetPlayerPed(-1), "mp_character_creation@lineup@male_b", "outro", 0.225, 1.0, 6000, 0, 1, 0, 0, 0)
+		TaskPlayAnim(PlayerPedId(), "mp_character_creation@lineup@male_b", "outro", 0.225, 1.0, 6000, 0, 1, 0, 0, 0)
 	elseif Character["gender"] == "Female" then
 		LoadAnim("mp_character_creation@lineup@female_a")
-		TaskPlayAnim(GetPlayerPed(-1), "mp_character_creation@lineup@female_a", "outro", 0.225, 1.0, 6000, 0, 1, 0, 0, 0)
+		TaskPlayAnim(PlayerPedId(), "mp_character_creation@lineup@female_a", "outro", 0.225, 1.0, 6000, 0, 1, 0, 0, 0)
 	end
 	Citizen.Wait(4275)
-	local playerPed = GetPlayerPed(-1)
+	local playerPed = PlayerPedId()
 	DoScreenFadeOut(1000)
 	Wait(1000)
 	SetEntityCoords(playerPed, initpos.x, initpos.y, initpos.z, true, false, false, true)
@@ -1095,7 +1099,7 @@ function EndCharCreator()
 	RenderScriptCams(false,  false,  0,  true,  true)
 	enable = false
 	EnableAllControlActions(0)
-    FreezeEntityPosition(GetPlayerPed(-1), false)
+    FreezeEntityPosition(PlayerPedId(), false)
 	Wait(1000)
 	SetResourceKvp('lbg-char-info', json.encode(Character))
 	TriggerServerEvent('ldg-chardone', Character)
@@ -1139,6 +1143,6 @@ AddEventHandler('lbg-openChar', function()
 	CharCreatorAnimation()
 end)
 
-RegisterCommand("charedit", function(source --[[ this is the player ID (on the server): a number ]], args --[[ this is a table of the arguments provided ]], rawCommand --[[ this is what the user entered ]])
+RegisterCommand("charedit", function()
     TriggerEvent('lbg-openChar')
 end, false)
